@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haven AI - The Sovereign Desktop Companion</title>
+<style>
+  :root {
+    --p: #1ABC9C; --pd: #16A085; --bg: #020c0f; --card: #05141a;
+    --text: #ecf0f1; --glow: rgba(26, 188, 156, 0.5);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+  
+  body {
+    background: var(--bg); color: var(--text); overflow-x: hidden;
+    background-image: radial-gradient(circle at 50% 0%, #0a2e28 0%, var(--bg) 60%);
+  }
+
+  /* Navbar */
+  nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 50px; position: fixed; width: 100%; top: 0; z-index: 100;
+    backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .logo { font-size: 24px; font-weight: 800; color: var(--p); display: flex; align-items: center; gap: 10px; }
+  .nav-links { display: flex; gap: 30px; }
+  .nav-links a { text-decoration: none; color: #bdc3c7; font-size: 14px; transition: 0.3s; }
+  .nav-links a:hover { color: var(--p); }
+  .cta-btn {
+    padding: 10px 24px; background: var(--p); color: #000; border-radius: 30px;
+    text-decoration: none; font-weight: 700; transition: 0.3s;
+    box-shadow: 0 0 20px var(--glow);
+  }
+  .cta-btn:hover { transform: scale(1.05); box-shadow: 0 0 40px var(--glow); }
+
+  /* Hero Section */
+  .hero {
+    height: 100vh; display: flex; align-items: center; justify-content: center;
+    text-align: center; flex-direction: column; padding: 0 20px; position: relative;
+  }
+  .hero h1 {
+    font-size: 80px; line-height: 1.1; margin-bottom: 20px;
+    background: linear-gradient(to right, #fff, var(--p));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: fadeUp 1s ease;
+  }
+  .hero p {
+    font-size: 20px; color: #95a5a6; max-width: 600px; margin-bottom: 40px;
+    animation: fadeUp 1.2s ease;
+  }
+  .hero-btns { display: flex; gap: 20px; animation: fadeUp 1.4s ease; }
+  .outline-btn {
+    padding: 12px 30px; border: 2px solid var(--p); color: var(--p);
+    border-radius: 30px; text-decoration: none; font-weight: 700; transition: 0.3s;
+  }
+  .outline-btn:hover { background: rgba(26, 188, 156, 0.1); }
+
+  /* Ghost Animation */
+  .ghost-container {
+    position: absolute; top: 20%; right: 10%; width: 150px; opacity: 0.8;
+    animation: float 6s ease-in-out infinite; pointer-events: none;
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-20px)} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+  /* Video Section */
+  .video-sec { padding: 50px 20px; text-align: center; position: relative; z-index: 2; }
+  .video-container {
+    max-width: 900px; margin: 0 auto;
+    border-radius: 20px; overflow: hidden;
+    border: 2px solid var(--p);
+    box-shadow: 0 0 50px rgba(26, 188, 156, 0.2), 0 20px 60px rgba(0,0,0,0.8);
+    position: relative;
+    background: #000;
+  }
+  .video-container video { width: 100%; display: block; }
+
+  /* Features */
+  .features { padding: 100px 50px; max-width: 1200px; margin: 0 auto; }
+  .sec-title { text-align: center; font-size: 36px; margin-bottom: 60px; color: var(--p); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+  .card {
+    background: var(--card); padding: 40px; border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
+  }
+  .card:hover { transform: translateY(-10px); border-color: var(--p); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+  .icon { font-size: 40px; margin-bottom: 20px; }
+  .card h3 { font-size: 22px; margin-bottom: 10px; }
+  .card p { color: #7f8c8d; line-height: 1.6; }
+
+  /* Pricing */
+  .pricing { padding: 100px 50px; background: #030f13; }
+  .price-card {
+    background: var(--card); padding: 50px; border-radius: 24px;
+    text-align: center; border: 1px solid rgba(255,255,255,0.05); position: relative;
+    display: flex; flex-direction: column;
+  }
+  .price-card.pro {
+    border: 2px solid var(--p); box-shadow: 0 0 50px rgba(26, 188, 156, 0.15);
+    transform: scale(1.05); z-index: 2;
+  }
+  .badge {
+    position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+    background: var(--p); color: #000; padding: 5px 15px; border-radius: 20px;
+    font-size: 12px; font-weight: 800; letter-spacing: 1px;
+  }
+  .price { font-size: 48px; font-weight: 800; margin: 20px 0; color: #fff; }
+  .price span { font-size: 16px; color: #7f8c8d; font-weight: 400; }
+  .features-list { list-style: none; margin: 30px 0; text-align: left; flex: 1; }
+  .features-list li { margin-bottom: 15px; color: #bdc3c7; display: flex; gap: 10px; }
+  .features-list li.off { opacity: 0.5; text-decoration: line-through; }
+  .check { color: var(--p); }
+
+  /* Footer */
+  footer { padding: 50px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); color: #7f8c8d; font-size: 14px; }
+  
+  /* Mobile */
+  @media(max-width: 768px) {
+    .hero h1 { font-size: 48px; }
+    .nav-links { display: none; }
+    .price-card.pro { transform: scale(1); margin: 20px 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">👻 HAVEN AI</div>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#download">Download</a>
+  </div>
+  <a href="#pricing" class="cta-btn">Get Started</a>
+</nav>
+
+<div class="hero">
+  <div class="ghost-container">
+    <svg viewBox="0 0 120 130">
+      <path d="M60 10 C30 10, 10 35, 10 65 C10 95, 20 115, 30 115 Q45 125, 60 115 Q75 125, 90 115 C100 115, 110 95, 110 65 C110 35, 90 5, 60 5 Z" fill="#1ABC9C" opacity="0.8"/>
+      <ellipse cx="42" cy="50" rx="9" ry="11" fill="#fff"/>
+      <ellipse cx="78" cy="50" rx="9" ry="11" fill="#fff"/>
+      <ellipse cx="42" cy="51" rx="5" ry="6" fill="#000"/>
+      <ellipse cx="78" cy="51" rx="5" ry="6" fill="#000"/>
+    </svg>
+  </div>
+  <h1>Your Sovereign<br>AI Companion</h1>
+  <p>Control your desktop, analyze screens, and code with a ghost that actually listens. The first AI with full system sovereignty.</p>
+  <div class="hero-btns">
+    <a href="#pricing" class="cta-btn">Get Access Now</a>
+    <a href="#features" class="outline-btn">Learn More</a>
+  </div>
+</div>
+
+<div class="video-sec">
+  <div class="sec-title" style="margin-bottom: 30px; font-size: 24px;">See Haven in Action</div>
+  <div class="video-container">
+    <!-- ضع ملف الفيديو الخاص بك هنا باسم demo.mp4 أو غير الاسم في الكود -->
+    <video controls autoplay loop muted playsinline poster="https://via.placeholder.com/900x500/05141a/1ABC9C?text=Haven+Demo+Preview">
+      <source src="demo.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
+
+<div class="features" id="features">
+  <div class="sec-title">Why Choose Haven?</div>
+  <div class="grid">
+    <div class="card">
+      <div class="icon">🖥️</div>
+      <h3>Desktop Control</h3>
+      <p>Haven isn't just a chatbot. It can open apps, read files, manage windows, and execute system commands directly.</p>
+    </div>
+    <div class="card">
+      <div class="icon">👁️</div>
+      <h3>Vision & Screen</h3>
+      <p>Show Haven your screen or upload images. It analyzes UI, reads errors, and helps you debug visually.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🔒</div>
+      <h3>Privacy First</h3>
+      <p>Support for local LLMs (Ollama) means your data never has to leave your machine. You hold the keys.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🎤</div>
+      <h3>Voice Interaction</h3>
+      <p>Talk to Haven naturally. It listens, understands, and replies with a custom AI voice.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pricing" id="pricing">
+  <div class="sec-title">Choose Your Power</div>
+  <div class="grid" style="max-width: 900px; margin: 0 auto;">
+    
+    <!-- Free Plan -->
+    <div class="price-card">
+      <h3>Ghost</h3>
+      <div class="price">$0 <span>/ forever</span></div>
+      <p style="margin-bottom: 20px; color: #7f8c8d;">For casual users</p>
+      <ul class="features-list">
+        <li><span class="check">✓</span> Basic Chat (Gemini Flash)</li>
+        <li><span class="check">✓</span> Web Search</li>
+        <li><span class="check">✓</span> Standard Themes</li>
+        <li class="off">Desktop Control</li>
+        <li class="off">Screen Analysis</li>
+        <li class="off">Local LLM Support</li>
+      </ul>
+      <a href="#" class="outline-btn" style="width:100%">Download Free</a>
+    </div>
+
+    <!-- Pro Plan -->
+    <div class="price-card pro">
+      <div class="badge">MOST POPULAR</div>
+      <h3>Sovereign</h3>
+      <div class="price">$19 <span>/ month</span></div>
+      <p style="margin-bottom: 20px; color: #7f8c8d;">For power users & developers</p>
+      <ul class="features-list">
+        <li><span class="check">✓</span> <strong>Full Desktop Control</strong></li>
+        <li><span class="check">✓</span> <strong>Screen Analysis (Vision)</strong></li>
+        <li><span class="check">✓</span> <strong>Local LLM (Ollama)</strong></li>
+        <li><span class="check">✓</span> Voice Mode (Talk & Listen)</li>
+        <li><span class="check">✓</span> Advanced Coding Mode</li>
+        <li><span class="check">✓</span> Priority Support</li>
+      </ul>
+      <a href="#" class="cta-btn" style="width:100%">Subscribe Now</a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 Haven AI. Built by KHAWRIZM (Team 403).<br>All rights reserved.</p>
+</footer>
+
+<script>
+  // Simple particle effect for background
+  const canvas = document.createElement('canvas');
+  document.body.appendChild(canvas);
+  canvas.style.position = 'fixed';
+  canvas.style.top = '0'; canvas.style.left = '0';
+  canvas.style.width = '100%'; canvas.style.height = '100%';
+  canvas.style.zIndex = '-1'; canvas.style.pointerEvents = 'none';
+  const ctx = canvas.getContext('2d');
+  
+  let width, height;
+  const particles = [];
+  
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  for(let i=0; i<50; i++) {
+    particles.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+      size: Math.random() * 2
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = 'rgba(26, 188, 156, 0.3)';
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if(p.x < 0) p.x = width; if(p.x > width) p.x = 0;
+      if(p.y < 0) p.y = height; if(p.y > height) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+</script>
+
+</body>
+</html>
