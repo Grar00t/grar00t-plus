@@ -1,0 +1,6 @@
+[submodule "core/os"]
+	path = core/os
+	url = https://github.com/Grar00t/KhawrizmOS
+[submodule "ui/ameen"]
+	path = ui/ameen
+	url = https://github.com/Grar00t/ameen-ai-v8.5
