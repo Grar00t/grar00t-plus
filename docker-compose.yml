@@ -1,0 +1,16 @@
+services:
+  ameen-ui:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./ui/ameen:/usr/share/nginx/html
+    restart: always
+
+  # إضافة Ollama كخلفية برمجية محليّة
+  ollama-core:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./data/ollama:/root/.ollama
