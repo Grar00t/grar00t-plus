@@ -1,0 +1,3 @@
+ملاحظة: لا يوجد وصول حالي إلى حساب gratechx بسبب مشكلة البريد/الهوية.
+The current canonical public repo is:
+https://github.com/Grar00t/grar00t-plus
